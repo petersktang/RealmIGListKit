@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,11 @@
 		985DDE9A230DEF67008DA3F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE98230DEF67008DA3F0 /* Main.storyboard */; };
 		985DDE9C230DEF67008DA3F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE9B230DEF67008DA3F0 /* Assets.xcassets */; };
 		985DDE9F230DEF67008DA3F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE9D230DEF67008DA3F0 /* LaunchScreen.storyboard */; };
+		985DDEA8230DF023008DA3F0 /* RealmIGListKit-input.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 985DDEA7230DF023008DA3F0 /* RealmIGListKit-input.xcfilelist */; };
+		985DDEAA230DF037008DA3F0 /* RealmIGListKit-output.xcfilelist in Resources */ = {isa = PBXBuildFile; fileRef = 985DDEA9230DF037008DA3F0 /* RealmIGListKit-output.xcfilelist */; };
+		985DDEAF230DF499008DA3F0 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEAD230DF499008DA3F0 /* Grid.swift */; };
+		985DDEB0230DF499008DA3F0 /* CollectionViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEAE230DF499008DA3F0 /* CollectionViewCell+Reuse.swift */; };
+		985DDEB2230DF51E008DA3F0 /* SectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEB1230DF51E008DA3F0 /* SectionController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,12 @@
 		985DDE9B230DEF67008DA3F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		985DDE9E230DEF67008DA3F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		985DDEA0230DEF67008DA3F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		985DDEA7230DF023008DA3F0 /* RealmIGListKit-input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = "RealmIGListKit-input.xcfilelist"; sourceTree = "<group>"; };
+		985DDEA9230DF037008DA3F0 /* RealmIGListKit-output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = "RealmIGListKit-output.xcfilelist"; sourceTree = "<group>"; };
+		985DDEAC230DF33A008DA3F0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		985DDEAD230DF499008DA3F0 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		985DDEAE230DF499008DA3F0 /* CollectionViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionViewCell+Reuse.swift"; sourceTree = "<group>"; };
+		985DDEB1230DF51E008DA3F0 /* SectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +49,8 @@
 		985DDE88230DEF67008DA3F0 = {
 			isa = PBXGroup;
 			children = (
+				985DDEAC230DF33A008DA3F0 /* README.md */,
+				985DDEA6230DF005008DA3F0 /* Configuration */,
 				985DDE93230DEF67008DA3F0 /* RealmIGListKit */,
 				985DDE92230DEF67008DA3F0 /* Products */,
 			);
@@ -56,12 +69,32 @@
 			children = (
 				985DDE94230DEF67008DA3F0 /* AppDelegate.swift */,
 				985DDE96230DEF67008DA3F0 /* ViewController.swift */,
+				985DDEB1230DF51E008DA3F0 /* SectionController.swift */,
 				985DDE98230DEF67008DA3F0 /* Main.storyboard */,
 				985DDE9B230DEF67008DA3F0 /* Assets.xcassets */,
 				985DDE9D230DEF67008DA3F0 /* LaunchScreen.storyboard */,
 				985DDEA0230DEF67008DA3F0 /* Info.plist */,
+				985DDEB3230DF629008DA3F0 /* Framework */,
 			);
 			path = RealmIGListKit;
+			sourceTree = "<group>";
+		};
+		985DDEA6230DF005008DA3F0 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				985DDEA7230DF023008DA3F0 /* RealmIGListKit-input.xcfilelist */,
+				985DDEA9230DF037008DA3F0 /* RealmIGListKit-output.xcfilelist */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		985DDEB3230DF629008DA3F0 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				985DDEAE230DF499008DA3F0 /* CollectionViewCell+Reuse.swift */,
+				985DDEAD230DF499008DA3F0 /* Grid.swift */,
+			);
+			path = Framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,6 +107,7 @@
 				985DDE8D230DEF67008DA3F0 /* Sources */,
 				985DDE8E230DEF67008DA3F0 /* Frameworks */,
 				985DDE8F230DEF67008DA3F0 /* Resources */,
+				985DDEAB230DF066008DA3F0 /* Carthage Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,19 +158,47 @@
 			files = (
 				985DDE9F230DEF67008DA3F0 /* LaunchScreen.storyboard in Resources */,
 				985DDE9C230DEF67008DA3F0 /* Assets.xcassets in Resources */,
+				985DDEAA230DF037008DA3F0 /* RealmIGListKit-output.xcfilelist in Resources */,
+				985DDEA8230DF023008DA3F0 /* RealmIGListKit-input.xcfilelist in Resources */,
 				985DDE9A230DEF67008DA3F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		985DDEAB230DF066008DA3F0 /* Carthage Copy Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"$(SRCROOT)/Configuration/RealmIGListKit-input.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "Carthage Copy Frameworks";
+			outputFileListPaths = (
+				"$(SRCROOT)/Configuration/RealmIGListKit-output.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		985DDE8D230DEF67008DA3F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				985DDEB2230DF51E008DA3F0 /* SectionController.swift in Sources */,
 				985DDE97230DEF67008DA3F0 /* ViewController.swift in Sources */,
 				985DDE95230DEF67008DA3F0 /* AppDelegate.swift in Sources */,
+				985DDEAF230DF499008DA3F0 /* Grid.swift in Sources */,
+				985DDEB0230DF499008DA3F0 /* CollectionViewCell+Reuse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +345,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = RealmIGListKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +363,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				INFOPLIST_FILE = RealmIGListKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
