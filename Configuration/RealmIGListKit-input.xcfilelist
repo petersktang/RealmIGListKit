@@ -2,4 +2,5 @@ $(SRCROOT)/Carthage/Build/iOS/IGListKit.framework
 $(SRCROOT)/Carthage/Build/iOS/SwifterSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework
 $(SRCROOT)/Carthage/Build/iOS/Realm.framework
+$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework
 $(SRCROOT)/Carthage/Build/iOS/RxSwift.framework

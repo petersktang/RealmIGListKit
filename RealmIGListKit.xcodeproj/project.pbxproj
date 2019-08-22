@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		981591F4230E408500563426 /* LapCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981591F3230E408500563426 /* LapCollectionCell.swift */; };
 		985DDE95230DEF67008DA3F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDE94230DEF67008DA3F0 /* AppDelegate.swift */; };
 		985DDE97230DEF67008DA3F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDE96230DEF67008DA3F0 /* ViewController.swift */; };
 		985DDE9A230DEF67008DA3F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE98230DEF67008DA3F0 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		981591F3230E408500563426 /* LapCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LapCollectionCell.swift; sourceTree = "<group>"; };
 		985DDE91230DEF67008DA3F0 /* RealmIGListKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmIGListKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		985DDE94230DEF67008DA3F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		985DDE96230DEF67008DA3F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				985DDE94230DEF67008DA3F0 /* AppDelegate.swift */,
 				985DDE96230DEF67008DA3F0 /* ViewController.swift */,
 				985DDEB1230DF51E008DA3F0 /* SectionController.swift */,
+				981591F3230E408500563426 /* LapCollectionCell.swift */,
 				985DDE98230DEF67008DA3F0 /* Main.storyboard */,
 				985DDE9B230DEF67008DA3F0 /* Assets.xcassets */,
 				985DDE9D230DEF67008DA3F0 /* LaunchScreen.storyboard */,
@@ -214,6 +217,7 @@
 				985DDEB6230DF877008DA3F0 /* DataRandomizer.swift in Sources */,
 				985DDEB2230DF51E008DA3F0 /* SectionController.swift in Sources */,
 				985DDE97230DEF67008DA3F0 /* ViewController.swift in Sources */,
+				981591F4230E408500563426 /* LapCollectionCell.swift in Sources */,
 				985DDE95230DEF67008DA3F0 /* AppDelegate.swift in Sources */,
 				985DDEAF230DF499008DA3F0 /* Grid.swift in Sources */,
 				985DDEB0230DF499008DA3F0 /* CollectionViewCell+Reuse.swift in Sources */,
