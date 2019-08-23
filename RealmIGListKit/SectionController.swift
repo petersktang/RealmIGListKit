@@ -9,6 +9,7 @@
 import UIKit
 import IGListKit
 import RealmSwift
+import RxRealm
 import RxSwift
 import RxCocoa
 
@@ -18,7 +19,7 @@ public class SectionController: ListSectionController {
     private let bag = DisposeBag()
     
     private var realmSection: RealmSection?
-    private var count = 0
+    fileprivate var handler: ReactiveDataSourceHandler<Lap>?
     
     init(grid: Grid, _ collectionView: UICollectionView) {
         self.grid = grid
@@ -30,35 +31,81 @@ extension SectionController {
         precondition(object is RealmSection)
         guard let object = object as? RealmSection else {return}
         realmSection = object
-        realmSection?.lapsObservable.subscribe(onNext:  { event in
-            let (_, realmchangeset) = event
-            let deletes:IndexSet = IndexSet(Array(realmchangeset?.deleted ?? []))
-            let inserts:IndexSet = IndexSet(Array(realmchangeset?.inserted ?? []))
-            let updates:IndexSet = IndexSet(Array(realmchangeset?.updated ?? []))
-            self.collectionContext?.performBatch(animated: true, updates: { batchContext in
-                print("lapsObservable pumping data .. \(Int.random(in: 0...10))")
-                self.count = self.count - deletes.count + inserts.count
-                batchContext.delete(in: self, at: deletes)
-                batchContext.insert(in: self, at: inserts)
-                batchContext.reload(in: self, at: updates)
-            })
-        }).disposed(by: bag)
+
+        if realmSection?.shareSection == realmSection?.sectionId {
+            handler = ReactiveDataSourceHandler(collectionView: collectionView, section: section, obs: object.lapsObservable)
+            handler?.handle().disposed(by: bag)
+        } else if let viewController = (viewController as? ViewController) {
+            let c = viewController.locate(section: realmSection?.shareSection ?? section)
+            handler = c?.handler
+        }
     }
     
     override public func canMoveItem(at index: Int) -> Bool {
         return true
     }
     override public func numberOfItems() -> Int {
-        return count
+        return handler?.count() ?? 0
     }
     override public func sizeForItem(at index: Int) -> CGSize {
+        //print(#function, collectionView.collectionViewLayout, section, index)
         return grid.size(for: collectionView, ratio: 1)
     }
     public override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: LapCollectionCell.self, for: self, at: index) as? LapCollectionCell else { fatalError("dequeue LapCollectionCell failure") }
         cell.customLabel.text = "> \(index)"
-        print("cellForItem() \(section):\(index)")
         return cell
     }
     
+}
+
+typealias RealmChangesetObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
+
+fileprivate class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
+    private var sections : Set<Int> = []
+    private let collectionView: UICollectionView
+    var realmObjects: AnyRealmCollection<O>?
+    let obs : RealmChangesetObservable<O>
+    init(collectionView: UICollectionView, section: Int, obs: RealmChangesetObservable<O>) {
+        self.collectionView = collectionView
+        self.sections.insert(section)
+        self.obs = obs
+    }
+    
+    func count() -> Int {
+        return self.realmObjects?.count ?? 0
+    }
+    
+    func handle() -> Disposable {
+        return obs.subscribeOn(MainScheduler.instance).subscribe(onNext: { event in
+            let (robjs, realmchangeset) = event
+
+            if self.realmObjects == nil {
+                self.realmObjects = robjs
+            }
+            if realmchangeset == nil {
+                self.collectionView.reloadData()
+                return
+            }
+
+            let d = realmchangeset?.deleted ?? []
+            let i = realmchangeset?.inserted ?? []
+            let u = realmchangeset?.updated ?? []
+            
+            let deletes = d.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            let inserts = i.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            let updates = u.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            self.collectionView.performBatchUpdates({
+                if deletes.count > 0 {
+                    self.collectionView.deleteItems(at: deletes)
+                }
+                if inserts.count > 0 {
+                    self.collectionView.insertItems(at: inserts)
+                }
+                if updates.count > 0 {
+                    self.collectionView.reloadItems(at: updates)
+                }
+            })
+        })
+    }
 }
