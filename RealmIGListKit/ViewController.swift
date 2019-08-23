@@ -27,7 +27,7 @@ class ViewController: UICollectionViewController {
         Observable.changeset(from: realm.objects(Timer.self).first!.laps).share()
     }()
     
-    private(set) var sectionControlers : [SectionController] = []
+    private(set) var sectionControlers : [String:ListSectionController] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,34 +48,39 @@ class ViewController: UICollectionViewController {
         
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
-    public func locate(section: Int) -> SectionController? {
-        return sectionControlers.filter{ $0.section == section }.first
+
+    public func join(group: String, controller: ListSectionController) -> ListSectionController? {
+        let locatedController = sectionControlers[group]
+        if locatedController == nil {
+            sectionControlers[group] = controller
+        }
+        print(#function, controller, "group ->", locatedController)
+        return locatedController
+
     }
 
 }
 
 extension ViewController: ListAdapterDataSource {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return [RealmSection(id: 0, laps: rxlaps, shareWith: 0), RealmSection(id: 1, laps: rxlaps, shareWith: 0), RealmSection(id: 2, laps: rxlaps, shareWith: 0)]
+        return [RealmSection(id: 0, laps: rxlaps, group: "A"), RealmSection(id: 1, laps: rxlaps, group: "A"), RealmSection(id: 2, laps: rxlaps, group: "A")]
     }
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        let s = SectionController(grid: grid, collectionView)
-        sectionControlers.append(s)
-        return s
+        return SectionController(grid: grid, collectionView)
     }
 }
 
 final class RealmSection {
     let sectionId : Int
     let lapsObservable : RealmChangesetObservable<Lap>
-    let shareSection: Int
-    init(id sectionId:Int, laps lapsObservable: RealmChangesetObservable<Lap>, shareWith shareSection: Int) {
+    let group: String
+    init(id sectionId:Int, laps lapsObservable: RealmChangesetObservable<Lap>, group: String) {
         self.sectionId = sectionId
         self.lapsObservable = lapsObservable
-        self.shareSection = shareSection
+        self.group = group
     }
 }
 

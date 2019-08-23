@@ -32,15 +32,14 @@ extension SectionController {
         guard let object = object as? RealmSection else {return}
         realmSection = object
 
-        if realmSection?.shareSection == realmSection?.sectionId {
+        guard let viewController = (viewController as? ViewController) else { return }
+        
+        if let groupController = viewController.join(group: object.group, controller: self) as? SectionController {
+            self.handler = groupController.handler
+            self.handler?.joinHandler(section: section)
+        } else {
             handler = ReactiveDataSourceHandler(collectionView: collectionView, section: section, obs: object.lapsObservable)
             handler?.handle().disposed(by: bag)
-        } else if let viewController = (viewController as? ViewController),
-            let controller = viewController.locate(section: realmSection?.shareSection ?? section),
-            let handler = controller.handler {
-            handler.joinHandler(section: section)
-            self.handler = handler
-            print(#function, "handler set \(section) -----> \(controller.section)")
         }
     }
     
