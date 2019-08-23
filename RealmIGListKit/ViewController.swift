@@ -49,16 +49,14 @@ class ViewController: UICollectionViewController {
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
     public func locate(section: Int) -> SectionController? {
-        return sectionControlers.filter{ $0.section == section}.first
+        return sectionControlers.filter{ $0.section == section }.first
     }
 
 }
 
 extension ViewController: ListAdapterDataSource {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return [RealmSection(id: 0, laps: rxlaps, shareWith: 0) ]
-            //, RealmSection(id: 1, laps: rxlaps, shareWith: 0),
-            //, RealmSection(id: 2, laps: rxlaps, shareWith: 0)]
+        return [RealmSection(id: 0, laps: rxlaps, shareWith: 0), RealmSection(id: 1, laps: rxlaps, shareWith: 0), RealmSection(id: 2, laps: rxlaps, shareWith: 0)]
     }
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil

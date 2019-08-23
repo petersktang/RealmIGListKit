@@ -35,9 +35,12 @@ extension SectionController {
         if realmSection?.shareSection == realmSection?.sectionId {
             handler = ReactiveDataSourceHandler(collectionView: collectionView, section: section, obs: object.lapsObservable)
             handler?.handle().disposed(by: bag)
-        } else if let viewController = (viewController as? ViewController) {
-            let c = viewController.locate(section: realmSection?.shareSection ?? section)
-            handler = c?.handler
+        } else if let viewController = (viewController as? ViewController),
+            let controller = viewController.locate(section: realmSection?.shareSection ?? section),
+            let handler = controller.handler {
+            handler.joinHandler(section: section)
+            self.handler = handler
+            print(#function, "handler set \(section) -----> \(controller.section)")
         }
     }
     
@@ -70,6 +73,11 @@ fileprivate class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
         self.collectionView = collectionView
         self.sections.insert(section)
         self.obs = obs
+    }
+    
+    func joinHandler(section: Int) {
+        self.sections.insert(section)
+        print(#function, section, "joining", self.sections)
     }
     
     func count() -> Int {
