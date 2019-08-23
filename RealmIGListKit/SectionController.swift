@@ -50,7 +50,6 @@ extension SectionController {
         return handler?.count() ?? 0
     }
     override public func sizeForItem(at index: Int) -> CGSize {
-        //print(#function, collectionView.collectionViewLayout, section, index)
         return grid.size(for: collectionView, ratio: 1)
     }
     public override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -76,7 +75,6 @@ fileprivate class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
     
     func joinHandler(section: Int) {
         self.sections.insert(section)
-        print(#function, section, "joining", self.sections)
     }
     
     func count() -> Int {

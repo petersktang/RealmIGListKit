@@ -54,7 +54,6 @@ class ViewController: UICollectionViewController {
         if locatedController == nil {
             sectionControlers[group] = controller
         }
-        print(#function, controller, "group ->", locatedController)
         return locatedController
 
     }
