@@ -21,7 +21,6 @@ class ViewController: UICollectionViewController {
     private var grid = Grid(columns: 9, margin: UIEdgeInsets(all: 24), padding: UIEdgeInsets(all: 12))
     private var store = ReactiveHandlerStore()
     private let bag = DisposeBag()
-
     
     private lazy var data = DataRandomizer()
     private lazy var realm = try! Realm(configuration: data.config)
