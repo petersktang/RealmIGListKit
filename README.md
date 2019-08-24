@@ -10,6 +10,8 @@ When changes base on the same data source needs to be reflected onto multiple Co
 ## Solution:
 Setup a handler store which registers all sections within the same Collection View that needs to have data reflected at the same time. Create a handler for each of these groups to manage both the snapshot(solution to problem 1) with a consolidated batch update block.
 
+UICollectionView.performBatchUpdates() is used instead of ListBatchContext.performBatch()
+
 # Reference
 Adopt the randomizer logic from 
 https://github.com/RxSwiftCommunity/RxRealmDataSources 
