@@ -1,5 +1,5 @@
 #  RealmIGListKit
-Sample code to handle RealmChangeset updates within IGListKit in a Multi-Section CollectionView. The code is able to allow the same realm change source hitting multiple CollectionView sections at the same time without getting into integrity errors.
+Sample code to handle RealmChangeset updates within IGListKit in a Multi-Section CollectionView. The code is able to allow the same realm change source hitting multiple CollectionView sections at the same time without getting into integrity errors like.
 
 <code>
 Invalid update: invalid number of items in section x.
