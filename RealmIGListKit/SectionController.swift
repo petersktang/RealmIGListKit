@@ -8,22 +8,22 @@
 
 import UIKit
 import IGListKit
-import RealmSwift
-import RxRealm
 import RxSwift
-import RxCocoa
 
 public class SectionController: ListSectionController {
     private weak var collectionView: UICollectionView!
     private let grid: Grid
-    private let bag = DisposeBag()
-    
+    private let store:ReactiveHandlerStore
+    private let bag : DisposeBag
+
     private var realmSection: RealmSection?
-    fileprivate var handler: ReactiveDataSourceHandler<Lap>?
+    private var handler: ReactiveDataSourceHandler<Lap>?
     
-    init(grid: Grid, _ collectionView: UICollectionView) {
+    init(grid: Grid, _ collectionView: UICollectionView, store: ReactiveHandlerStore, bag: DisposeBag) {
         self.grid = grid
         self.collectionView = collectionView
+        self.store = store
+        self.bag = bag
     }
 }
 extension SectionController {
@@ -31,10 +31,8 @@ extension SectionController {
         precondition(object is RealmSection)
         guard let object = object as? RealmSection else {return}
         realmSection = object
-
-        guard let viewController = (viewController as? ViewController) else { return }
         
-        if let groupController = viewController.join(group: object.group, controller: self) as? SectionController {
+        if let groupController = store.join(group: object.group, controller: self) as? SectionController {
             self.handler = groupController.handler
             self.handler?.joinHandler(section: section)
         } else {
@@ -58,59 +56,4 @@ extension SectionController {
         return cell
     }
     
-}
-
-typealias RealmChangesetObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
-
-fileprivate class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
-    private var sections : Set<Int> = []
-    private let collectionView: UICollectionView
-    var realmObjects: AnyRealmCollection<O>?
-    let obs : RealmChangesetObservable<O>
-    init(collectionView: UICollectionView, section: Int, obs: RealmChangesetObservable<O>) {
-        self.collectionView = collectionView
-        self.sections.insert(section)
-        self.obs = obs
-    }
-    
-    func joinHandler(section: Int) {
-        self.sections.insert(section)
-    }
-    
-    func count() -> Int {
-        return self.realmObjects?.count ?? 0
-    }
-    
-    func handle() -> Disposable {
-        return obs.subscribeOn(MainScheduler.instance).subscribe(onNext: { event in
-            let (robjs, realmchangeset) = event
-
-            if self.realmObjects == nil {
-                self.realmObjects = robjs
-            }
-            if realmchangeset == nil {
-                self.collectionView.reloadData()
-                return
-            }
-
-            let d = realmchangeset?.deleted ?? []
-            let i = realmchangeset?.inserted ?? []
-            let u = realmchangeset?.updated ?? []
-            
-            let deletes = d.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
-            let inserts = i.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
-            let updates = u.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
-            self.collectionView.performBatchUpdates({
-                if deletes.count > 0 {
-                    self.collectionView.deleteItems(at: deletes)
-                }
-                if inserts.count > 0 {
-                    self.collectionView.insertItems(at: inserts)
-                }
-                if updates.count > 0 {
-                    self.collectionView.reloadItems(at: updates)
-                }
-            })
-        })
-    }
 }

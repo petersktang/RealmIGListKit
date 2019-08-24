@@ -8,10 +8,9 @@
 
 import UIKit
 import SwifterSwift
-import RealmSwift
-import RxRealm
-import RxSwift
 import IGListKit
+import RealmSwift
+import RxSwift
 
 
 class ViewController: UICollectionViewController {
@@ -20,14 +19,15 @@ class ViewController: UICollectionViewController {
     private(set) var adapter: ListAdapter?
     
     private var grid = Grid(columns: 9, margin: UIEdgeInsets(all: 24), padding: UIEdgeInsets(all: 12))
+    private var store = ReactiveHandlerStore()
+    private let bag = DisposeBag()
+
     
     private lazy var data = DataRandomizer()
     private lazy var realm = try! Realm(configuration: data.config)
     private lazy var rxlaps: RealmChangesetObservable<Lap> = {
         Observable.changeset(from: realm.objects(Timer.self).first!.laps).share()
     }()
-    
-    private(set) var sectionControlers : [String:ListSectionController] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,26 +49,26 @@ class ViewController: UICollectionViewController {
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0)
     }
 
-    public func join(group: String, controller: ListSectionController) -> ListSectionController? {
-        let locatedController = sectionControlers[group]
-        if locatedController == nil {
-            sectionControlers[group] = controller
-        }
-        return locatedController
-
-    }
-
 }
 
 extension ViewController: ListAdapterDataSource {
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return [RealmSection(id: 0, laps: rxlaps, group: "A"), RealmSection(id: 1, laps: rxlaps, group: "A"), RealmSection(id: 2, laps: rxlaps, group: "A")]
+        return [RealmSection(id: 0, laps: rxlaps, group: "A"),
+                RealmSection(id: 1, laps: rxlaps, group: "A"),
+                RealmSection(id: 2, laps: rxlaps, group: "A"),
+                RealmSection(id: 3, laps: rxlaps, group: "A"),
+                RealmSection(id: 4, laps: rxlaps, group: "A"),
+                RealmSection(id: 5, laps: rxlaps, group: "A"),
+                RealmSection(id: 6, laps: rxlaps, group: "A"),
+                RealmSection(id: 7, laps: rxlaps, group: "A"),
+                RealmSection(id: 8, laps: rxlaps, group: "A"),
+                RealmSection(id: 9, laps: rxlaps, group: "A")]
     }
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return SectionController(grid: grid, collectionView)
+        return SectionController(grid: grid, collectionView, store: store, bag: bag)
     }
 }
 
