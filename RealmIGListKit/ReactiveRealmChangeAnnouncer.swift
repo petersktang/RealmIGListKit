@@ -11,33 +11,6 @@ import IGListKit
 import RealmSwift
 import RxSwift
 
-//@objc protocol ReactiveRealmChangeListener: class {
-//    var section: Int { get }
-//    func didChange(announcer: RealmChangeAnnouncer, value: Int)
-//}
-//
-//final class RealmChangeAnnouncer: NSObject {
-//
-//    private var value: Int = 0
-//    private let map: NSHashTable<ReactiveRealmChangeListener> = NSHashTable<ReactiveRealmChangeListener>.weakObjects()
-//
-//    func add(listener: ReactiveRealmChangeListener) {
-//        map.add(listener)
-//    }
-//
-//    func change() {
-//        value += 1
-//        for listener in map.allObjects {
-//            listener.didChange(announcer: self, value: value)
-//        }
-//    }
-//
-//    func sections() -> [Int] {
-//        return map.objectEnumerator().map{ ($0 as? ReactiveRealmChangeListener)?.section }.compactMap({ $0 })
-//    }
-//
-//}
-
 protocol ReactiveRealmChangeListener: class {
     var section: Int {get}
     var viewController: UIViewController? { get }
