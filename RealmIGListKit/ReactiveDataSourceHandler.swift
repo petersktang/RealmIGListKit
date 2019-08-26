@@ -15,18 +15,15 @@ import RxRealm
 typealias RealmChangesetObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
 
 final public class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
-    private var sections : Set<Int> = []
     private let collectionView: UICollectionView
+    private let announcer: RealmChangeAnnouncer<O>
     private var realmObjects: AnyRealmCollection<O>?
     private let obs : RealmChangesetObservable<O>
-    init(collectionView: UICollectionView, section: Int, obs: RealmChangesetObservable<O>) {
+
+    init(collectionView: UICollectionView, section: Int, obs: RealmChangesetObservable<O>, announcer: RealmChangeAnnouncer<O>) {
         self.collectionView = collectionView
-        self.sections.insert(section)
         self.obs = obs
-    }
-    
-    func joinHandler(section: Int) {
-        self.sections.insert(section)
+        self.announcer = announcer
     }
     
     func count() -> Int {
@@ -53,9 +50,11 @@ final public class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
             let i = realmchangeset?.inserted ?? []
             let u = realmchangeset?.updated ?? []
             
-            let deletes = d.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
-            let inserts = i.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
-            let updates = u.map{ r in self.sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            let sections = self.announcer.sections()
+            
+            let deletes = d.map{ r in sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            let inserts = i.map{ r in sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
+            let updates = u.map{ r in sections.map{s in IndexPath(row: r, section: s)} }.flatMap{ $0 }
             self.collectionView.performBatchUpdates({
                 if deletes.count > 0 {
                     self.collectionView.deleteItems(at: deletes)
@@ -85,8 +84,8 @@ final public class ReactiveDataSourceHandler<O> where O: RealmSwift.Object {
             let i = realmchangeset?.inserted ?? []
             let u = realmchangeset?.updated ?? []
             
-            let sections = self.sections
-            
+            let sections = self.announcer.sections()
+
             self.collectionView.performBatchUpdates({
                 sections.forEach { section in
                     let deletes = d.map{ r in IndexPath(row: r, section: section) }
