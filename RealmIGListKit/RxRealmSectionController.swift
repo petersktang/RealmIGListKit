@@ -66,5 +66,27 @@ class RxRealmSectionController: ListSectionController, RxListSectionController {
         configureCell(cell: cell, data: "\(index)")
         return cell
     }
-    
+}
+
+final class RealmSection {
+    let sectionId : Int
+    let lapsObservable : RxRealmAccouncerHandler<Lap,String>.RealmObservable<Lap>
+    let group: String
+    init(id sectionId:Int, laps lapsObservable: RxRealmAccouncerHandler<Lap,String>.RealmObservable<Lap>, group: String) {
+        self.sectionId = sectionId
+        self.lapsObservable = lapsObservable
+        self.group = group
+    }
+}
+
+extension RealmSection: ListDiffable {
+    func diffIdentifier() -> NSObjectProtocol {
+        return sectionId as NSObjectProtocol
+    }
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        guard let object = object as? RealmSection else {
+            return false
+        }
+        return self.sectionId == object.sectionId
+    }
 }

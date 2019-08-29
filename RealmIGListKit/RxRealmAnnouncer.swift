@@ -46,7 +46,7 @@ public protocol RxRealmHandler{
 
 public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
 
-     public typealias RealmChangesetObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
+     public typealias RealmObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
     
     public var realmObject: Object.Type = O.self
     public var snapshotObject: Any.Type = E.self
@@ -90,20 +90,20 @@ public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
             self?.refresh(robjs: robjs, realmchangset: rchangeset)
             
             guard let rchangeset = rchangeset, let sections = self?.sections() else {
-                print("collectionView.reloadData()")
+                debugPrint("collectionView.reloadData()")
                 collectionView.reloadData()
                 return
             }
             RxRealmAccouncerHandler._handle1(collectionView, sections: sections, robjs: robjs, rchangeset: rchangeset)
         })
     }
-    internal func handle(announcer: RxRealmAnnouncer, query: RealmChangesetObservable<O>) -> Disposable {
+    public func handle(announcer: RxRealmAnnouncer, query: RealmObservable<O>) -> Disposable {
         return query.subscribeOn(MainScheduler.instance).subscribe(onNext: { [weak self] (robjs, rchangeset) in
             guard let collectionView = announcer.collectionView else { fatalError("collectionView not found in RxRealmAnnouncer") }
             self?.refresh(robjs: robjs, realmchangset: rchangeset)
             
             guard let rchangeset = rchangeset, let sections = self?.sections() else {
-                print("collectionView.reloadData()")
+                debugPrint("collectionView.reloadData()")
                 collectionView.reloadData()
                 return
             }

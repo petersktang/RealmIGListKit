@@ -24,7 +24,7 @@ final class ReactiveViewController: UICollectionViewController, ListAdapterDataS
 
     private lazy var data = DataRandomizer()
     private lazy var realm = try! Realm(configuration: data.config)
-    private lazy var rxlaps: RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap> = {
+    private lazy var rxlaps: RxRealmAccouncerHandler<Lap,String>.RealmObservable<Lap> = {
         Observable.changeset(from: realm.objects(Timer.self).first!.laps).share()
     }()
     
@@ -90,27 +90,4 @@ final class ReactiveViewController: UICollectionViewController, ListAdapterDataS
         return nil
     }
     
-}
-
-final class RealmSection {
-    let sectionId : Int
-    let lapsObservable : RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap>
-    let group: String
-    init(id sectionId:Int, laps lapsObservable: RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap>, group: String) {
-        self.sectionId = sectionId
-        self.lapsObservable = lapsObservable
-        self.group = group
-    }
-}
-
-extension RealmSection: ListDiffable {
-    func diffIdentifier() -> NSObjectProtocol {
-        return sectionId as NSObjectProtocol
-    }
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        guard let object = object as? RealmSection else {
-            return false
-        }
-        return self.sectionId == object.sectionId
-    }
 }
