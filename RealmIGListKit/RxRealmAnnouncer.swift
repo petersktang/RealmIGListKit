@@ -13,15 +13,16 @@ import RxSwift
 import IGListKit
 
 public class RxRealmAnnouncer {
-    public let bag = DisposeBag()
+    private(set) weak var bag: DisposeBag!
     private(set) var handlers = [RxRealmHandler]()
-    private let adapter: ListAdapter
+    private(set) weak var adapter: ListAdapter!
     
     var collectionView: UICollectionView? {
         return adapter.collectionView
     }
-    init(adapter: ListAdapter) {
+    init(adapter: ListAdapter, bag: DisposeBag) {
         self.adapter = adapter
+        self.bag = bag
     }
     func add(handler: RxRealmHandler) {
         handlers.append(handler)

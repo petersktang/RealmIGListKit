@@ -11,8 +11,8 @@ import IGListKit
 import RealmSwift
 
 class RxRealmSectionController: ListSectionController, RxListSectionController {
-    private let grid: Grid
-    private let announcer: RxRealmAnnouncer
+    private weak var grid: Grid!
+    private weak var announcer: RxRealmAnnouncer!
     private(set) var handler: RxRealmHandler?
     
     private var realmSection: RealmSection?

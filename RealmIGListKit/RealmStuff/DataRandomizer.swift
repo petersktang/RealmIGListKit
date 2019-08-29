@@ -18,7 +18,7 @@ fileprivate extension Int {
 
 class DataRandomizer {
 
-    private let bag = DisposeBag()
+    private(set) var bag = DisposeBag()
 
     lazy var config: Realm.Configuration = {
         var config = Realm.Configuration.defaultConfiguration

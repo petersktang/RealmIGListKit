@@ -14,13 +14,12 @@ import RealmSwift
 final class ReactiveViewController: UICollectionViewController, ListAdapterDataSource {
     
     private var grid = Grid(columns: 9, margin: UIEdgeInsets(all: 24), padding: UIEdgeInsets(all: 12))
-    private let bag = DisposeBag()
     
     private lazy var adapter: ListAdapter = {
         ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
-    private lazy var announcerNew = RxRealmAnnouncer(adapter: adapter)
+    private lazy var announcerNew = RxRealmAnnouncer(adapter: adapter, bag: data.bag)
 
     private lazy var data = DataRandomizer()
     private lazy var realm = try! Realm(configuration: data.config)
