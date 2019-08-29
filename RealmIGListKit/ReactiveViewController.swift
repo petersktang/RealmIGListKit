@@ -20,13 +20,13 @@ final class ReactiveViewController: UICollectionViewController, ListAdapterDataS
         ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
+    private lazy var announcerNew = RxRealmAnnouncer(adapter: adapter)
+
     private lazy var data = DataRandomizer()
     private lazy var realm = try! Realm(configuration: data.config)
-    private lazy var rxlaps: RealmChangesetObservable<Lap> = {
+    private lazy var rxlaps: RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap> = {
         Observable.changeset(from: realm.objects(Timer.self).first!.laps).share()
     }()
-
-    private lazy var announcer = RealmChangeAnnouncer<Lap>(bag: bag)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +82,35 @@ final class ReactiveViewController: UICollectionViewController, ListAdapterDataS
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return ListeningRealmSectionController(grid: grid, collectionView, announcer: announcer)
+        //return ListeningRealmSectionController(grid: grid, collectionView, announcer: announcer)
+        return RxRealmSectionController(grid: grid, announcer: announcerNew)
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }
     
+}
+
+final class RealmSection {
+    let sectionId : Int
+    let lapsObservable : RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap>
+    let group: String
+    init(id sectionId:Int, laps lapsObservable: RxRealmAccouncerHandler<Lap,String>.RealmChangesetObservable<Lap>, group: String) {
+        self.sectionId = sectionId
+        self.lapsObservable = lapsObservable
+        self.group = group
+    }
+}
+
+extension RealmSection: ListDiffable {
+    func diffIdentifier() -> NSObjectProtocol {
+        return sectionId as NSObjectProtocol
+    }
+    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+        guard let object = object as? RealmSection else {
+            return false
+        }
+        return self.sectionId == object.sectionId
+    }
 }

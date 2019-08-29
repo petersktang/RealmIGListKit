@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		981591F4230E408500563426 /* LapCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981591F3230E408500563426 /* LapCollectionCell.swift */; };
-		98427F9B2310E81300525819 /* ReactiveDataSourceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98427F9A2310E81300525819 /* ReactiveDataSourceHandler.swift */; };
 		985DDE95230DEF67008DA3F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDE94230DEF67008DA3F0 /* AppDelegate.swift */; };
 		985DDE9A230DEF67008DA3F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE98230DEF67008DA3F0 /* Main.storyboard */; };
 		985DDE9C230DEF67008DA3F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 985DDE9B230DEF67008DA3F0 /* Assets.xcassets */; };
@@ -20,14 +19,13 @@
 		985DDEB6230DF877008DA3F0 /* DataRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEB5230DF877008DA3F0 /* DataRandomizer.swift */; };
 		985DDEB9230DF897008DA3F0 /* Lap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEB7230DF897008DA3F0 /* Lap.swift */; };
 		985DDEBA230DF897008DA3F0 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985DDEB8230DF897008DA3F0 /* Timer.swift */; };
-		98BFF12B23122C0C00A12F67 /* ReactiveRealmChangeAnnouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFF12A23122C0C00A12F67 /* ReactiveRealmChangeAnnouncer.swift */; };
-		98BFF12D23122DD400A12F67 /* ListeningRealmSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFF12C23122DD400A12F67 /* ListeningRealmSectionController.swift */; };
+		98BC4F9D2317BA54000E7820 /* RxRealmAnnouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BC4F9C2317BA54000E7820 /* RxRealmAnnouncer.swift */; };
+		98BC4F9F2317BA82000E7820 /* RxRealmSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BC4F9E2317BA82000E7820 /* RxRealmSectionController.swift */; };
 		98BFF12F2312357E00A12F67 /* ReactiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BFF12E2312357D00A12F67 /* ReactiveViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		981591F3230E408500563426 /* LapCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LapCollectionCell.swift; sourceTree = "<group>"; };
-		98427F9A2310E81300525819 /* ReactiveDataSourceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveDataSourceHandler.swift; sourceTree = "<group>"; };
 		985DDE91230DEF67008DA3F0 /* RealmIGListKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealmIGListKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		985DDE94230DEF67008DA3F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		985DDE99230DEF67008DA3F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,8 +40,8 @@
 		985DDEB5230DF877008DA3F0 /* DataRandomizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataRandomizer.swift; sourceTree = "<group>"; };
 		985DDEB7230DF897008DA3F0 /* Lap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lap.swift; sourceTree = "<group>"; };
 		985DDEB8230DF897008DA3F0 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
-		98BFF12A23122C0C00A12F67 /* ReactiveRealmChangeAnnouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRealmChangeAnnouncer.swift; sourceTree = "<group>"; };
-		98BFF12C23122DD400A12F67 /* ListeningRealmSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningRealmSectionController.swift; sourceTree = "<group>"; };
+		98BC4F9C2317BA54000E7820 /* RxRealmAnnouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxRealmAnnouncer.swift; sourceTree = "<group>"; };
+		98BC4F9E2317BA82000E7820 /* RxRealmSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxRealmSectionController.swift; sourceTree = "<group>"; };
 		98BFF12E2312357D00A12F67 /* ReactiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,9 +86,8 @@
 				985DDEB4230DF859008DA3F0 /* RealmStuff */,
 				985DDEB3230DF629008DA3F0 /* Framework */,
 				98BFF12E2312357D00A12F67 /* ReactiveViewController.swift */,
-				98BFF12C23122DD400A12F67 /* ListeningRealmSectionController.swift */,
-				98BFF12A23122C0C00A12F67 /* ReactiveRealmChangeAnnouncer.swift */,
-				98427F9A2310E81300525819 /* ReactiveDataSourceHandler.swift */,
+				98BC4F9E2317BA82000E7820 /* RxRealmSectionController.swift */,
+				98BC4F9C2317BA54000E7820 /* RxRealmAnnouncer.swift */,
 			);
 			path = RealmIGListKit;
 			sourceTree = "<group>";
@@ -222,15 +219,14 @@
 			files = (
 				985DDEB6230DF877008DA3F0 /* DataRandomizer.swift in Sources */,
 				98BFF12F2312357E00A12F67 /* ReactiveViewController.swift in Sources */,
-				98BFF12D23122DD400A12F67 /* ListeningRealmSectionController.swift in Sources */,
 				981591F4230E408500563426 /* LapCollectionCell.swift in Sources */,
-				98427F9B2310E81300525819 /* ReactiveDataSourceHandler.swift in Sources */,
+				98BC4F9F2317BA82000E7820 /* RxRealmSectionController.swift in Sources */,
+				98BC4F9D2317BA54000E7820 /* RxRealmAnnouncer.swift in Sources */,
 				985DDE95230DEF67008DA3F0 /* AppDelegate.swift in Sources */,
 				985DDEAF230DF499008DA3F0 /* Grid.swift in Sources */,
 				985DDEB0230DF499008DA3F0 /* CollectionViewCell+Reuse.swift in Sources */,
 				985DDEB9230DF897008DA3F0 /* Lap.swift in Sources */,
 				985DDEBA230DF897008DA3F0 /* Timer.swift in Sources */,
-				98BFF12B23122C0C00A12F67 /* ReactiveRealmChangeAnnouncer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
