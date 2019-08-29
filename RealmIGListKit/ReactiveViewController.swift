@@ -19,6 +19,7 @@ final class ReactiveViewController: UICollectionViewController, ListAdapterDataS
         ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
+    // Becareful when handling DisposeBag with lazy announcer, it fail.
     private lazy var announcerNew = RxRealmAnnouncer(adapter: adapter, bag: data.bag)
 
     private lazy var data = DataRandomizer()
