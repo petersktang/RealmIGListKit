@@ -10,7 +10,6 @@ import Foundation
 import RealmSwift
 import RxRealm
 import RxSwift
-import RxCocoa
 import IGListKit
 
 public class RxRealmAnnouncer {
@@ -46,7 +45,7 @@ public protocol RxRealmHandler{
 
 public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
 
-     public typealias RealmObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
+    public typealias RealmObservable<O> =  Observable<(AnyRealmCollection<O>, RealmChangeset?)> where O: RealmSwift.Object
     
     public var realmObject: Object.Type = O.self
     public var snapshotObject: Any.Type = E.self
