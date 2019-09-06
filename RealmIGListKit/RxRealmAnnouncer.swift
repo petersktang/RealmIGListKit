@@ -40,6 +40,7 @@ public protocol RxRealmHandler{
     var snapshotObject: Any.Type { get }
     
     func add<Listener: ListSectionController & RxListSectionController> (listener: Listener)
+    func remove<Listener: ListSectionController & RxListSectionController> (listener: Listener)
     func count() -> Int
     func sections() -> [Int]
 }
@@ -65,6 +66,14 @@ public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
         let pointer = Unmanaged.passUnretained(listener).toOpaque()
         listeners.addPointer(pointer)
     }
+    public func remove<Listener>(listener: Listener) where Listener : ListSectionController, Listener : RxListSectionController {
+        for i in 0 ..< listeners.count {
+            if let pointer = listeners.pointer(at: i), pointer == Unmanaged.passUnretained(listener).toOpaque() {
+                listeners.replacePointer(at: i, withPointer: nil)
+            }
+        }
+        self.listeners.compact()
+    }
     public func sections() -> [Int] {
         var sections = [Int]()
         for i in 0 ..< listeners.count {
@@ -73,7 +82,7 @@ public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
                 sections.append(listener.section)
             }
         }
-        return sections
+        return sections.unique
     }
     public func count() -> Int {
         return self.snapshot.count
@@ -91,7 +100,8 @@ public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
             
             guard let rchangeset = rchangeset, let sections = self?.sections() else {
                 debugPrint("collectionView.reloadData()")
-                collectionView.reloadData()
+                announcer.adapter.performUpdates(animated: false, completion: nil)
+                //collectionView.reloadData()
                 return
             }
             RxRealmAccouncerHandler._handle1(collectionView, sections: sections, robjs: robjs, rchangeset: rchangeset)
@@ -104,7 +114,8 @@ public class RxRealmAccouncerHandler<O:Object,E>: RxRealmHandler {
             
             guard let rchangeset = rchangeset, let sections = self?.sections() else {
                 debugPrint("collectionView.reloadData()")
-                collectionView.reloadData()
+                announcer.adapter.performUpdates(animated: false, completion: nil)
+                //collectionView.reloadData()
                 return
             }
             RxRealmAccouncerHandler._handle1(collectionView, sections: sections, robjs: robjs, rchangeset: rchangeset)
@@ -139,4 +150,10 @@ public protocol RxListSectionController: class {
     var viewController: UIViewController? { get }
     var collectionContext: ListCollectionContext? { get }
     var handler: RxRealmHandler? { get }
+}
+
+extension Array where Element : Hashable {
+    var unique: [Element] {
+        return Array(Set(self))
+    }
 }
